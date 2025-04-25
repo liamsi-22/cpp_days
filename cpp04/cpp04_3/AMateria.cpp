@@ -1,5 +1,4 @@
 #include "AMateria.hpp"
-#include "ICharacter.hpp"
 
 AMateria::AMateria() : _type("Default"){
     std::cout << "AMateria default constructor called" << std::endl;

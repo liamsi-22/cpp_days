@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include "ICharacter.hpp"
-#include "AMateria.hpp"
 
 typedef struct s_garbage{
     AMateria*   data;

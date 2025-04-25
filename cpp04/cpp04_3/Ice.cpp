@@ -1,5 +1,4 @@
 #include "Ice.hpp"
-#include "ICharacter.hpp"
 
 Ice::Ice() : AMateria("ice"){
     std::cout << "Ice of type " << getType() << " created." << std::endl;

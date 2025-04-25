@@ -1,4 +1,5 @@
 #include "Character.hpp"
+#include "AMateria.hpp"
 
 Character::Character():_name("Default"),_garbageList(NULL){
     for (int i = 0; i < 4; i++)
@@ -128,7 +129,7 @@ void Character::unequip(int idx){
         std::cout << "wrong index" << std::endl;
         return ;
     }
-    
+
     if (!_inventory[idx])
         return;
 

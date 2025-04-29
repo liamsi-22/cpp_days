@@ -8,7 +8,7 @@ std::ostream& operator<<(std::ostream& os, const Form& f){
     return os;
 }
 
-Form::Form():_name("Form"), _signed(0), _gradeToSign(10), _gradeToexec(50){
+Form::Form():_name("Form"), _signed(false), _gradeToSign(10), _gradeToexec(50){
     std::cout << "Form default constructor is called !" << std::endl;
 }
 
@@ -51,6 +51,16 @@ void Form::beSigned(const Bureaucrat& b){
         throw(GradeTooLowException());
 }
 
+void Form::execute(Bureaucrat const & executor) const{
+    if (executor.getGrade() > this->getGradeToExec())
+        throw(ExecutionGradeTooLowException());
+    if (!this->getSigned())
+        throw(NotSignedFormException());
+    return (this->action());
+}
+
+void  Form::action() const{}
+
 const char* Form::GradeTooHighException::what() const throw(){
     return ("Grade is too high!");
 }
@@ -59,6 +69,14 @@ const char* Form::GradeTooLowException::what() const throw(){
     return ("Grade is too low!");
 }
 
+const char* Form::NotSignedFormException::what() const throw(){
+    return ("Form is not signed yet!");
+}
+
+const char* Form::ExecutionGradeTooLowException::what() const throw(){
+    return ("Grade is too low to execute the form!");
+}
+
 Form::~Form(){
-    std::cout << _name << "'s destructor is being called !" << std::endl;
+    std::cout <<"Form  destructor is being called !" << std::endl;
 }

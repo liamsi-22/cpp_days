@@ -5,7 +5,7 @@
 #include <iostream>
 #include <exception>
 
-class AForm;
+class Form;
 class Bureaucrat;
 
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& b);
@@ -28,8 +28,8 @@ class Bureaucrat
         void promote();
         void demote();
 
-        void signForm(AForm& f);
-        void executeForm(AForm const & form);
+        void signForm(Form& f);
+        void executeForm(Form const & form);
 
         class GradeTooHighException : public std::exception{
             public :

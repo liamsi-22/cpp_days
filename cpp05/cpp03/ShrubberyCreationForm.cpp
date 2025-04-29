@@ -1,10 +1,12 @@
 #include "ShrubberyCreationForm.hpp"
 
-ShrubberyCreationForm::ShrubberyCreationForm():  AForm("default_shrubbery", 145, 137){
+ShrubberyCreationForm::ShrubberyCreationForm():  Form("default_shrubbery", 145, 137){
     std::cout << "ShrubberyCreationForm default constructor is being called !" << std::endl;
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target):  AForm("ShrubberyCreation", 145, 137), _target(target){}
+ShrubberyCreationForm::ShrubberyCreationForm(const std::string& target):  Form("ShrubberyCreation", 145, 137), _target(target){
+    std::cout << getName() <<" parameterized constructor called !" << std::endl;
+}
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& other): _target(other.getTarget()){}
 

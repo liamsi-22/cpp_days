@@ -1,10 +1,12 @@
 #include "PresidentialPardonForm.hpp"
 
-PresidentialPardonForm::PresidentialPardonForm():  AForm("default_shrubbery", 145, 137){
+PresidentialPardonForm::PresidentialPardonForm():  Form("default_shrubbery", 145, 137){
     std::cout << "PresidentialPardonForm default constructor is being called !" << std::endl;
 }
 
-PresidentialPardonForm::PresidentialPardonForm(const std::string& target):  AForm("PresidentialPardon", 145, 137), _target(target){}
+PresidentialPardonForm::PresidentialPardonForm(const std::string& target):  Form("PresidentialPardon", 145, 137), _target(target){
+    std::cout << getName() <<" parameterized constructor called !" << std::endl;
+}
 
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm& other): _target(other.getTarget()){}
 

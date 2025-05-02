@@ -1,6 +1,5 @@
 #include "Intern.hpp"
 
-
 Intern::Intern(){
     std::cout << "Intern default constructor is being called !" << std::endl;
 }

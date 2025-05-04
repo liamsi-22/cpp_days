@@ -12,7 +12,6 @@
 #include <functional>
 #include "Account.hpp"
 
-// std::vector<arr, arr + arraysize - 1>
 
 int		main( void ) {
 

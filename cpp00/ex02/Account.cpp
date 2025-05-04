@@ -1,13 +1,12 @@
 #include "Account.hpp"
 #include <iostream>
 #include <ctime>
-#include <sstream>
+#include <iomanip>
 
 int Account::_nbAccounts = 0;
 int Account::_totalAmount = 0;
 int Account::_totalNbDeposits = 0;
 int Account::_totalNbWithdrawals = 0;
-
 
 
 Account::Account(int initial_deposit)
@@ -16,12 +15,12 @@ Account::Account(int initial_deposit)
  _nbDeposits(0),
  _nbWithdrawals(0) {
 
-     Account::_nbAccounts++;
+    Account::_nbAccounts++;
     Account::_totalAmount += initial_deposit;
 
     Account::_displayTimestamp();
-    std::cout << " index:" << Account::_accountIndex 
-            << ";amount:" << Account::_amount 
+    std::cout << " index:" << _accountIndex 
+            << ";amount:" << _amount 
             << ";created" << std::endl;
 }
 
@@ -50,29 +49,22 @@ void	Account::displayAccountsInfos( void ){
                 << ";withdrawals:" << _totalNbWithdrawals << std::endl;
 }
 
-void	Account::_displayTimestamp( void ){
-        std::time_t now = std::time(0);  // Get current time
-        std::tm* timeinfo = std::localtime(&now);  // Convert it to local time
-    
-        // Manually format the timestamp using ternary operator for padding
-        std::ostringstream oss;
-        oss << "[" 
-            << (1900 + timeinfo->tm_year)
-            << (timeinfo->tm_mon + 1 < 10 ? "0" : "") << (timeinfo->tm_mon + 1)
-            << (timeinfo->tm_mday < 10 ? "0" : "") << timeinfo->tm_mday
-            << "_"
-            << (timeinfo->tm_hour < 10 ? "0" : "") << timeinfo->tm_hour
-            << (timeinfo->tm_min < 10 ? "0" : "") << timeinfo->tm_min
-            << (timeinfo->tm_sec < 10 ? "0" : "") << timeinfo->tm_sec
-            << "]";
-    
-        std::cout << oss.str();
-    }
+void Account::_displayTimestamp(void) {
+    std::time_t now = std::time(0);
+    std::tm* t = std::localtime(&now);
 
-
+    std::cout << '['
+              << (1900 + t->tm_year)
+              << std::setw(2) << std::setfill('0') << t->tm_mon + 1
+              << std::setw(2) << t->tm_mday << '_'
+              << std::setw(2) << t->tm_hour
+              << std::setw(2) << t->tm_min
+              << std::setw(2) << t->tm_sec
+              << ']';
+}
 
 void	Account::makeDeposit( int deposit ){
-    Account::_displayTimestamp();
+    _displayTimestamp();
     std::cout << " index:" << _accountIndex
                 << ";p_amount:" << _amount
                 << ";deposit:" << deposit;
@@ -114,7 +106,6 @@ void	Account::displayStatus( void ) const {
             << ";deposits:" << _nbDeposits 
             << ";withdrawals:" << _nbWithdrawals << std::endl;
 }
-
 
 Account::~Account( void ){
     Account::_displayTimestamp();

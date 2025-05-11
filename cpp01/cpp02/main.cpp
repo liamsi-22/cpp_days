@@ -5,13 +5,13 @@ int main(){
     std::string* stringPTR = &arg;
     std::string &stringREF = arg;
 
-    std::cout << ". The memory address of the string variable: " << &arg << std::endl;
-    std::cout << ". The memory address held by stringPTR: " << &stringPTR << std::endl;
-    std::cout << ". The memory address held by stringREF: " << &stringREF << std::endl;
+    std::cout << "Address of brain:     " << &arg << std::endl;
+    std::cout << "Address held by PTR:  " << &stringPTR << std::endl;
+    std::cout << "Address held by REF:  " << &stringREF << std::endl;
 
     std::cout << std::endl;
 
-    std::cout << ". The value of the string variable: " << arg << std::endl;
-    std::cout << ". The value pointed to by stringPTR: " << *stringPTR << std::endl;
-    std::cout << ". The value pointed to by stringREF: " << stringREF << std::endl;
+    std::cout << "Value of brain:          " << arg << std::endl;
+    std::cout << "Value pointed to by PTR: " << *stringPTR << std::endl;
+    std::cout << "Value via the REF:       " << stringREF << std::endl;
 }

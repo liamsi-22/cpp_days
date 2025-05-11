@@ -8,6 +8,7 @@ class Array
     private:
         T* _array;
         unsigned int _size;
+
     public:
         Array():_array(NULL), _size(0){};
 

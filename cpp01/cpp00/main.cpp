@@ -1,9 +1,4 @@
-#include <iostream>
 #include "Zombie.hpp"
-
-
-void randomChump(std::string name);
-Zombie* newZombie( std::string name );
 
 int main(){
     Zombie* undead_1 = newZombie("undead_1");

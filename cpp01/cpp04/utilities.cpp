@@ -1,5 +1,6 @@
 #include "utilities.hpp"
 
+
 std::string stringReplace(const std::string& line, const std::string& s1, const std::string& s2)
 {
     std::string result;
@@ -9,7 +10,7 @@ std::string stringReplace(const std::string& line, const std::string& s1, const 
     if (s1.empty()) {
         return (line);
     }
-
+    //npos stands for “no position”.
     while((find = line.find(s1, pos)) != std::string::npos)
     {
         result.append(line, pos, find - pos);
@@ -17,21 +18,20 @@ std::string stringReplace(const std::string& line, const std::string& s1, const 
         pos = find + s1.length();
     }
     result.append(line, pos , line.length() - pos);
-
     return (result);
 }
 
 int fileManipulation(const std::string& fileName, const std::string& s1, const std::string& s2){
     std::string line;
 
-    std::ifstream input(fileName);
+    std::ifstream input(fileName.c_str());
     if (!input)
     {
         std::cout << "error : cannot open a file " << fileName << std::endl;
         return 1;
     }
 
-    std::ofstream output(fileName + ".replace");
+    std::ofstream output((fileName + ".replace").c_str());
     if (!output)
     {
         std::cout << "error : cannot creat a file " << fileName << ".replace" << std::endl;
@@ -46,3 +46,4 @@ int fileManipulation(const std::string& fileName, const std::string& s1, const s
     output.close();
     return (0);
 }
+

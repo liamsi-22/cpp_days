@@ -1,12 +1,13 @@
 #include "Harl.hpp"
 
 int main(int ac, char **av){
-    std::string arg;
+    std::string state;
     Harl hrl;
+
     if (ac == 2)
     {
-        arg = av[1];
-        hrl.complain(arg);
+        state = av[1];
+        hrl.complain(state);
     }
     return (0);
 }

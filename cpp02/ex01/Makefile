@@ -1,7 +1,7 @@
-NAME = Zombie
+NAME = Fixed
 CC = c++
 CFLAGS = -std=c++98 -Wall -Wextra -Werror
-SRC = main.cpp Zombie.cpp randomChump.cpp newZombie.cpp
+SRC = main.cpp Fixed.cpp
 OBJS = $(SRC:.cpp=.o)
 
 all: $(NAME)

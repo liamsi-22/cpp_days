@@ -2,17 +2,18 @@
 #define WEAPON_HPP
 
 #include <iostream>
+#include <string>
 
 class Weapon
 {
     private:
-        std::string type;
+        std::string _type;
+
     public:
-        Weapon();
-        Weapon(std::string _wpn);
+        Weapon(std::string wpn);
 
         void setType(std::string NewType);
-        std::string& getType();
+        const std::string& getType();
 
         ~Weapon();
 };

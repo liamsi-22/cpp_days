@@ -1,4 +1,10 @@
+// Exactly! When you create an object and assign it a value from another temporary object
+//  (whose scope ends immediately), the compiler will often use copy elision or RVO to move
+//   the temporary object directly into the new object without calling the assignment
+//    operator.
 
+// In this case, no copy or assignment occurs because the compiler optimizes the process
+//  by directly constructing the object in place.
 #include <iostream>
 class Base {
     public:

@@ -12,12 +12,14 @@ Fixed::Fixed(): _fixed_num(0){
     std::cout << "Default constructor called" << std::endl;
 }
 
-Fixed::Fixed(const int num): _fixed_num(num << _fractional_bits){
-    std::cout << "parameterized constructor called" << std::endl;
+Fixed::Fixed(const int num){
+	std::cout << "Int constructor called" << std::endl;
+    _fixed_num = num << _fractional_bits;
 }
 
-Fixed::Fixed(const float floating_num):  _fixed_num(roundf(floating_num * (1 <<_fractional_bits))){
-        std::cout << "parameterized constructor called" << std::endl;
+Fixed::Fixed(const float floating_num){
+	std::cout << "Float constructor called" << std::endl;
+    _fixed_num = roundf(floating_num * (1 <<_fractional_bits));
 }
 
 Fixed::Fixed(const Fixed& other){

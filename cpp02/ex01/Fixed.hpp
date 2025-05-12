@@ -1,3 +1,6 @@
+#ifndef FIXED_HPP
+#define FIXED_HPP
+
 #include <iostream>
 #include <cmath>
 
@@ -19,7 +22,6 @@ class Fixed
         Fixed(const Fixed& other);
         Fixed& operator=(const Fixed& other);
 
-
         float toFloat( void ) const;
         int toInt( void ) const;
 
@@ -28,3 +30,5 @@ class Fixed
         
         ~Fixed();
 };
+
+#endif

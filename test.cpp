@@ -1,5 +1,5 @@
 // Exactly! When you create an object and assign it a value from another temporary object
-//  (whose scope ends immediately), the compiler will often use copy elision or RVO to move
+//  (whose scope ends immediately), the compiler will often use ----copy elision or RVO to move
 //   the temporary object directly into the new object without calling the assignment
 //    operator.
 

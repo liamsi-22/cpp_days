@@ -53,7 +53,7 @@ int Span::longestSpan() const{
     return (std::abs(max - min));
 }
 
-
+// need to add argument N, check if _number.size() + N < _max ...
 void Span::setNumbers(){
     for (int i = 0; i < _max; ++i)
     {

@@ -15,6 +15,8 @@ void increment(D& elm){
 //     std::cout << "this element of the array is : " << elm << std::endl;
 // }
 
+
+// need to be two template here ... c07 test in the correction page
 template <typename T>
 void iter(T* arr, size_t arr_size, void (*func)(T& elm)){
     for (size_t i = 0; i < arr_size; ++i)

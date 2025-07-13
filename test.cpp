@@ -6,22 +6,39 @@
 // In this case, no copy or assignment occurs because the compiler optimizes the process
 //  by directly constructing the object in place.
 #include <iostream>
-class Base {
-    public:
-        void foo() { std::cout << "Base::foo\n"; }
-};
+// class Base {
+//     public:
+//         void foo() { std::cout << "Base::foo\n"; }
+// };
 
-class Derived : public Base {
-    public:
-        void bar() { std::cout << "Derived::bar\n"; }
-};
+// class Derived : public Base {
+//     public:
+//         void bar() { std::cout << "Derived::bar\n"; }
+// };
 
-class custom_exception : public std::exception
-{
-    virtual const char* what() const noexcept{
-        return "My_custom_exception";
-    }
-};
+// class custom_exception : public std::exception
+// {
+//     virtual const char* what() const noexcept{
+//         return "My_custom_exception";
+//     }
+// };
+
+using namespace std;
+
+ /* start of Enclosing class declaration */  
+class Enclosing {      
+      
+   int x;
+   
+   /* start of Nested class declaration */  
+   class Nested {
+      int y;   
+   }; // declaration Nested class ends here
+
+   void EnclosingFun(Nested *n) {
+        cout<<n->y;  // Compiler Error: y is private in Nested
+   }      
+}; // declaration Enclosing class ends here
 
 int main() {
     // std::string word = "hello";
@@ -38,11 +55,11 @@ int main() {
     //     std::cerr << e.what() << '\n';
     // }
 
-    Base* obj1 = new Derived;
-    const derived obj = derived;
+    // Base* obj1 = new Derived;
+    // const derived obj = derived;
 
 
-    obj1->makeSound();
+    // obj1->makeSound();
     // obj2.makeSound();
 
 

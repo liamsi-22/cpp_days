@@ -3,6 +3,7 @@
 
 // #pragma => once work the same as header guards
 #include <iostream>
+#include <string>
 #include <exception>
 
 class Form;

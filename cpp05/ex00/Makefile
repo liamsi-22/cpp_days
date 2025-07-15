@@ -1,6 +1,6 @@
 NAME = test
 CC = c++
-CFLAGS = -std=c++98 -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = -std=c++98 -Wall -Wextra -Werror
 SRC = main.cpp Bureaucrat.cpp
 OBJS = $(SRC:.cpp=.o)
 

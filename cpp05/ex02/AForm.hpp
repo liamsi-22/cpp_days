@@ -2,6 +2,7 @@
 #define AFORM_HPP
 
 #include <iostream>
+#include <string>
 #include <exception>
 #include "Bureaucrat.hpp"
 

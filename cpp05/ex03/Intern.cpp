@@ -4,9 +4,13 @@ Intern::Intern(){
     std::cout << "Intern default constructor is being called !" << std::endl;
 }
 
-Intern::Intern(const Intern& other){}
+Intern::Intern(const Intern& other){
+    (void)other;
+}
 
 Intern& Intern::operator=(const Intern& other){
+    if (this != &other)
+    {}
     return (*this);
 }
 

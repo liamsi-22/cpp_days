@@ -1,10 +1,9 @@
 #ifndef INTERN_HPP
 #define INTERN_HPP
 
-#include <exception>
+#include <string>
 #include <iostream>
-
-#include "Bureaucrat.hpp"
+#include <exception>
 #include "Form.hpp"
 
 #include "PresidentialPardonForm.hpp"

@@ -22,19 +22,24 @@ std::string ShrubberyCreationForm::getTarget() const{
 }
 
 void  ShrubberyCreationForm::action() const {
-    std::ofstream file(_target + "_shrubbery");
-    std::cout <<"      &&& &&  & &&" << std::endl;
-    std::cout <<"   && &||&||& ()|/ @, &&" << std::endl;
-    std::cout <<"   &||(/&/&||/& /_/)_&/_&" << std::endl;
-    std::cout <<"&() &||&|()|/&|| '%' & ()" << std::endl;
-    std::cout <<"&_||&_/&&& | & |&&/&__%_/_& &&" << std::endl;
-    std::cout <<"&&   && & &| &| /& & % ()& /&&" << std::endl;
-    std::cout <<" ()&_---()&|&||&&-&&--%---()~" << std::endl;
-    std::cout <<"     &&     ||||" << std::endl;
-    std::cout <<"              |||" << std::endl;
-    std::cout <<"              |||" << std::endl;
-    std::cout <<"              |||" << std::endl;
-    std::cout <<"        , -=-~  .-^- _" << std::endl;
+    std::ofstream file((_target + "_shrubbery").c_str());
+    if (!file){
+        std::cerr << "Failed to open file.\n";
+        return ;
+    }
+    file <<"      &&& &&  & &&" << std::endl;
+    file <<"   && &||&||& ()|/ @, &&" << std::endl;
+    file <<"   &||(/&/&||/& /_/)_&/_&" << std::endl;
+    file <<"&() &||&|()|/&|| '%' & ()" << std::endl;
+    file <<"&_||&_/&&& | & |&&/&__%_/_& &&" << std::endl;
+    file <<"&&   && & &| &| /& & % ()& /&&" << std::endl;
+    file <<" ()&_---()&|&||&&-&&--%---()~" << std::endl;
+    file <<"     &&     ||||" << std::endl;
+    file <<"              |||" << std::endl;
+    file <<"              |||" << std::endl;
+    file <<"              |||" << std::endl;
+    file <<"        , -=-~  .-^- _" << std::endl;
+    file.close();
 }
 
 ShrubberyCreationForm::~ShrubberyCreationForm(){

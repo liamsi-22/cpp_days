@@ -1,7 +1,7 @@
 NAME = test
 CC = c++
 CFLAGS = -std=c++98 -Wall -Wextra -Werror
-SRC = main.cpp assist.cpp
+SRC = main.cpp Serializer.cpp Data.cpp
 OBJS = $(SRC:.cpp=.o)
 
 all: $(NAME)

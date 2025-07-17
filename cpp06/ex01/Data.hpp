@@ -6,8 +6,11 @@
 class Data {
     public:
         int value;
-        
-        Data(int val) : value(val) {};
+        Data();
+        Data(const Data&);
+        Data& operator=(const Data&);
+        Data(int);
+        ~Data();
 };
 
 #endif

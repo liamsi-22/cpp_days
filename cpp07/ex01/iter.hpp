@@ -3,24 +3,24 @@
 
 #include <iostream>
 
-template <typename D>
-void increment(D& elm){
-    std::cout << "elm before : " << elm << std::endl;
-    elm++;
-    std::cout << "elm after : " << elm << std::endl;
-}
-
 // template <typename D>
 // void increment(D& elm){
-//     std::cout << "this element of the array is : " << elm << std::endl;
+//     std::cout << "elm before : " << elm << std::endl;
+//     elm++;
+//     std::cout << "elm after : " << elm << std::endl;
 // }
 
 
-// need to be two template here ... c07 test in the correction page
 template <typename T>
-void iter(T* arr, size_t arr_size, void (*func)(T& elm)){
-    for (size_t i = 0; i < arr_size; ++i)
-        func(arr[i]);
+void iter(T *array, const size_t length, void (*func)(T&)){
+    for (size_t i = 0; i < length; i++)
+        func(array[i]);
 }
+template <typename T>
+void iter(const T *array, const size_t length, void (*func)(const T&)){
+    for (size_t i = 0; i < length; i++)
+        func(array[i]);
+}
+
 
 #endif

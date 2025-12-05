@@ -1,10 +1,36 @@
 #include <iostream>
 #include "iter.hpp"
 
-int main(){
-    int arr[] = {10,20,30,40,50,60,70,80,90};
-    float arr1[] = {3.33, 4.44, 5.55, 6.66, 7.77, 8.88, 9.99};
-    std::string arr2[] = {"ismail", "liam", "liamsi", "samile"};
 
-    iter(arr, 9, increment);
+class Awesome
+{
+    public:
+        Awesome( void ) : _n( 42 ) { return; }
+        int get( void ) const { return this->_n; }
+    private:
+        int _n;
+};
+
+std::ostream & operator<<( std::ostream & o, Awesome const & rhs )
+{
+  o << rhs.get();
+  return o;
+}
+
+template< typename M >
+void print(const M& x )
+{
+  std::cout << x << std::endl;
+  return;
+}
+
+int main()
+{
+  int tab[] = { 0, 1, 2, 3, 4 };
+  Awesome tab2[5];
+
+  iter( tab, 5, print<const int> );
+  iter( tab2, 5, print<Awesome> );
+
+  return 0;
 }

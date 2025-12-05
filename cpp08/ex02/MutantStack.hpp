@@ -1,17 +1,18 @@
+#ifndef MUTANSTACK_HPP
+#define MUTANSTACK_HPP
+
 #include <iostream>
 #include <stack>
 
-template <typename T>
+template  <typename T>
 class MutantStack : public std::stack<T>
 {
-    private:
-
     public:
-        typedef typename std::stack<T>::container_type::iterator iterator;
-
         MutantStack();
-        MutantStack(const MutantStack& other);
-        MutantStack& operator=(const MutantStack& other);
+        MutantStack(const MutantStack<T>& other);
+        MutantStack<T>& operator=(const MutantStack<T>& other);
+
+        typedef typename std::stack<T>::container_type::iterator iterator;
 
         iterator begin();
         iterator end();
@@ -20,3 +21,5 @@ class MutantStack : public std::stack<T>
 };
 
 #include "MutantStack.tpp"
+
+#endif

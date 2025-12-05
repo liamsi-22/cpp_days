@@ -1,7 +1,7 @@
-NAME = test
+NAME = btc
 CC = c++
 CFLAGS = -std=c++98 -Wall -Wextra -Werror
-SRC = main.cpp Span.cpp
+SRC = main.cpp BitcoinExchange.cpp
 OBJS = $(SRC:.cpp=.o)
 
 all: $(NAME)

@@ -1,75 +1,54 @@
 #include "Span.hpp"
 
-Span::Span(){
-        std::cout << "constructor is being called" << std::endl;
-        std::srand(std::time(nullptr));
-}
+Span::Span():_max(0){}
 
-Span::Span(unsigned int n): _max(n){
-    std::cout << "parametirize constructor is being called" << std::endl;
-    std::srand(std::time(nullptr));
-}
+Span::Span(unsigned int N):_max(N){}
 
-Span::Span(const Span& other): _max(other._max), _numbers(other._numbers){}
+Span::Span(const Span &other):_num_list(other._num_list), _max(other._max){}
 
-Span& Span::operator=(const Span& other)
-{
+Span &Span::operator=(const Span & other){
     if (this != &other)
     {
-        _max =  other._max;
-        _numbers = other._numbers;
+        _num_list = other._num_list;
+        _max = other._max;
     }
-    return (*this);
+    return(*this);
 }
 
-void Span::addNumber(int n)
-{
-    if (_numbers.size() >= _max)
-        throw ReachMaxnumber();
-    _numbers.push_back(n);
+void Span::addNumber(int item){
+    if (_num_list.size() >= _max)
+        throw GenericExceptiton("Container is FULL!");
+    _num_list.push_back(item);
 }
 
 int Span::shortestSpan() const{
-    if (_numbers.size() < 2)
-        throw NotEnoughNumbers();
-    std::vector<int> sorted_array = _numbers;
-    std::sort(sorted_array.begin(), sorted_array.end());
-
-    int smallSpan = std::numeric_limits<int>::max();
-    for (std::vector<int>::iterator it = sorted_array.begin(); (it + 1) != sorted_array.end(); ++it)
+    if (_num_list.size() < 2)
+        throw GenericExceptiton("At least 2 items required!");
+    std::vector<int> tmp = _num_list;
+    std::sort(tmp.begin(), tmp.end());
+    int mindiff = INT_MAX;
+    for (size_t i = 0; i < tmp.size() - 1; i++)
     {
-        int diff = *(it + 1) - *it;
-        if (diff < smallSpan)
-            smallSpan = diff;
+        if (tmp[i + 1] - tmp[i] < mindiff)
+            mindiff = tmp[i + 1] - tmp[i];
     }
-    return (smallSpan);
+    return (mindiff);
 }
 
 int Span::longestSpan() const{
-    if (_numbers.size() < 2)
-        throw NotEnoughNumbers();
-    int max = *std::max_element(_numbers.begin(),_numbers.end());
-    int min = *std::min_element(_numbers.begin(),_numbers.end());
-    return (std::abs(max - min));
+    if (_num_list.size() < 2)
+        throw GenericExceptiton("At least 2 items required!");
+    int min = *std::min_element(_num_list.begin(), _num_list.end());
+    int max = *std::max_element(_num_list.begin(), _num_list.end());
+    return (max - min);
 }
 
-// need to add argument N, check if _number.size() + N < _max ...
-void Span::setNumbers(){
-    for (int i = 0; i < _max; ++i)
-    {
-        int random = std::rand() % 10000;
-        Span::addNumber(random);
-    }
+Span::GenericExceptiton::GenericExceptiton(const std::string &str): _str(str){}
+
+Span::GenericExceptiton::~GenericExceptiton() throw(){}
+
+const char* Span::GenericExceptiton::what() const throw(){
+    return _str.c_str();
 }
 
-const char* Span::ReachMaxnumber::what() const throw() {
-    return ("ERROR:\tno more space left in the container !");
-}
-
-const char* Span::NotEnoughNumbers::what() const throw() {
-    return ("ERROR:\tnot enoguh numbers in the container !");
-}
-
-Span::~Span(){
-    std::cout << "destructor is being called" << std::endl;
-}
+Span::~Span(){}

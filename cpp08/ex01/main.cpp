@@ -2,9 +2,14 @@
 
 int main()
 {
-    Span sp = Span(10);
+    Span sp = Span(6);
+    // std::vector<int> arr;
+    // arr.push_back(20);
+    // arr.push_back(50);
+    // arr.push_back(90);
+    // arr.push_back(70);
     try {
-        // sp.setNumbers();
+        // sp.addNumbers(arr.begin(), arr.end());
         sp.addNumber(30);
         sp.addNumber(0);
         sp.addNumber(17);
@@ -18,4 +23,4 @@ int main()
         std::cout << e.what() << std::endl;
     }
     return 0;
-}0
+}

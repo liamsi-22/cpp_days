@@ -1,6 +1,5 @@
 #include "BitcoinExchange.hpp"
-#include <cstdlib>
-std::string trim(const std::string& str)
+static std::string trim(const std::string& str)
 {
     size_t first = str.find_first_not_of(' ');
     if (first == std::string::npos)
@@ -9,22 +8,41 @@ std::string trim(const std::string& str)
     size_t last = str.find_last_not_of(' ');
     return str.substr(first, last - first + 1);
 }
-// ! remove the usless deli parameter
-bool isValidDate(const std::string &date, char deli){
+
+static int daysInMonth(int month, int year)
+{
+    switch (month)
+    {
+        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+            return 31;
+        case 4: case 6: case 9: case 11:
+            return 30;
+        case 2:
+            if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
+                return 29;
+            else
+                return 28;
+        default:
+            return -1;
+    }
+}
+
+static bool isValidDate(const std::string &date)
+{
     int i = -1;
     while (date[++i])
     {
-        if (!std::isdigit(date[i]) && date[i] != deli && date[i] != '-')
+        if (!std::isdigit(date[i]) && date[i] != '-')
             return (false);
-        if (date[i] == deli && date[i + 1] == deli)
+        if (date[i] == '-'  && date[i + 1] == '-')
             return (false);
     }
-    if (date[0] == deli || date[date.length() - 1] == deli)
+    if (date[0] == '-' || date[date.length() - 1] == '-')
         return (false);
-    if (std::count(date.begin(), date.end(), deli) != 2)
+    if (std::count(date.begin(), date.end(), '-') != 2)
         return (false);
-    size_t first_pos = date.find(deli);
-    size_t second_pos = date.find(deli , first_pos + 1);
+    size_t first_pos = date.find('-');
+    size_t second_pos = date.find('-' , first_pos + 1);
 
     std::string YEAR = date.substr(0, first_pos);
     std::string MONTH = date.substr(first_pos + 1, second_pos - (first_pos + 1));
@@ -36,16 +54,14 @@ bool isValidDate(const std::string &date, char deli){
     int m = atoi(MONTH.c_str());
     int d = atoi(DAY.c_str());
 
-    if (y < 2009 || y > 2022)
+    if (y < 2009 || y > 2022 || m < 1 || m > 12  || d < 1 || d > daysInMonth(m, y))
         return false;
-    if (m < 1 || m > 12)
-        return false;
-    if (d < 1 || d > 31)
-        return false;
+
     return (true);
 }
-// ! this one for the DB 
-bool isValidPrice(const std::string &pricestr){
+
+static bool isValidPrice(const std::string &pricestr)
+{
     if (pricestr[0] == '-')
         return (false);
     int i = -1;
@@ -62,16 +78,15 @@ bool isValidPrice(const std::string &pricestr){
     return (true);
 }
 
-// put the prototype in header file 
-// ! this one for input file 
-bool isValidValue(const std::string &pricestr){
+static bool isValidValue(const std::string &pricestr)
+{
     int i = -1;
     int counter = 0;
     while (pricestr[++i])
     {
         if (!std::isdigit(pricestr[i]) && pricestr[i] != '.')
         {
-            if (i == 0 && pricestr[i] != '-')
+            if (pricestr[i] == '-' && i != 0)
                 return (false);
         }
         if (pricestr[i] == '.')
@@ -81,7 +96,6 @@ bool isValidValue(const std::string &pricestr){
         return (false);
     return (true);
 }
-
 
 BitcoinExchange::BitcoinExchange(){}
 
@@ -93,9 +107,8 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other){
     return (*this);
 }
 
-BitcoinExchange::~BitcoinExchange(){}
-
-void BitcoinExchange::loadDatabase(const std::string &csvFile){
+void BitcoinExchange::loadDatabase(const std::string &csvFile)
+{
     std::ifstream file(csvFile.c_str());
     if (!file.is_open())
         throw std::runtime_error("Error: could not open file.");
@@ -113,7 +126,7 @@ void BitcoinExchange::loadDatabase(const std::string &csvFile){
         std::string date = trim(line.substr(0, pos));
         std::string pricestr = trim(line.substr(pos + 1));
 
-        if (date.empty() || pricestr.empty() || !isValidDate(date, '-') || !isValidPrice(pricestr))
+        if (date.empty() || pricestr.empty() || !isValidDate(date) || !isValidPrice(pricestr))
             throw std::runtime_error("Error: wrong file format.");
 
         _db[date] = atof(pricestr.c_str());
@@ -121,7 +134,8 @@ void BitcoinExchange::loadDatabase(const std::string &csvFile){
     file.close();
 }
 
-void BitcoinExchange::processInput(const std::string &inputFile){
+void BitcoinExchange::processInput(const std::string &inputFile)
+{
     std::ifstream file2(inputFile.c_str());
     if (!file2.is_open())
         throw std::runtime_error("Error: could not open file.");
@@ -142,11 +156,11 @@ void BitcoinExchange::processInput(const std::string &inputFile){
         std::string date = trim(line.substr(0, pos));
         std::string value = trim(line.substr(pos + 1));
 
-        if (date.empty() || value.empty() || !isValidDate(date, '-') || !isValidValue(value))
+        if (date.empty() || value.empty() || !isValidDate(date) || !isValidValue(value))
             std::cout << "Error: bad input => " << line << std::endl;
         else if (value[0] == '-')
             std::cout << "Error: not a positive number." << std::endl;
-        else if (atof(value.c_str()) > INT_MAX)
+        else if (atof(value.c_str()) > 1000)
             std::cout << "Error: too large a number." << std::endl;
         else
         {
@@ -156,12 +170,16 @@ void BitcoinExchange::processInput(const std::string &inputFile){
             else if (it->first != date)
             {
                 if (it == _db.begin())
+                {
                     std::cout << "Error: bad input => " << line << std::endl;
+                    continue;
+                }
                 it--;
             }
-            std::cout << date << " => " << value << " = " << ( atof(value.c_str()) * it->second) << std::endl;
+            std::cout << date << " => " << value << " = " << (atof(value.c_str()) * it->second) << std::endl;
         }
-
     }
     file2.close();
 }
+
+BitcoinExchange::~BitcoinExchange(){}

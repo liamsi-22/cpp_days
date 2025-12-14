@@ -1,14 +1,14 @@
 #include <vector>
 #include <deque>
 #include <iostream>
-#include "algorithm"
+#include <algorithm>
 #include <sys/time.h>
 #include <cstdlib>
 #include <iomanip>
 #include <utility>
 
-// typedef std::vector<std::pair<int, int> > intPairVec;
-// typedef std::deque<std::pair<int, int> > intPairDeque;
+typedef std::vector<std::pair<int, int> > pairVectorContainer;
+typedef std::deque<std::pair<int, int> > pairdequeContainer;
 
 class PmergeMe
 {
@@ -16,8 +16,8 @@ class PmergeMe
         std::vector<int> vector;
         std::deque<int> deque;
 
-        double           vectorSortTime_;
-        double           dequeSortTime_;
+        double  vectorSortTime_;
+        double  dequeSortTime_;
 
         void sortVec();
         void sortDeque();

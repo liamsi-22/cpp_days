@@ -1,6 +1,5 @@
 #include "PmergeMe.hpp"
 
-
 PmergeMe::PmergeMe(){}
 
 void PmergeMe::ser_number(long int &num){
@@ -20,7 +19,6 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& other){
 	}
 	return (*this);
 }
-
 
 bool PmergeMe::vecSortCheck()
 {
@@ -42,16 +40,17 @@ bool PmergeMe::dequeSortCheck()
 	return (true);
 }
 
-// put "std::vector<std::pair<int, int> >" in typedef
-std::vector<std::pair<int, int> > createPairs(std::vector<int>& vectorIntSeq)
+pairVectorContainer createPairs(std::vector<int>& vectorIntSeq)
 {
-	std::vector<std::pair<int, int> > pairVec;
+	pairVectorContainer pairVec;
 	std::vector<int>::iterator it = vectorIntSeq.begin();
 	while (it != vectorIntSeq.end() && (it + 1) != vectorIntSeq.end())
 	{
 		std::pair<int, int> pair;
-		pair.first = *it; vectorIntSeq.erase(it);
-		pair.second = *it; vectorIntSeq.erase(it);
+		pair.first = *it;
+		it = vectorIntSeq.erase(it);
+		pair.second = *it;
+		it = vectorIntSeq.erase(it);
 		if (pair.second < pair.first)
 			std::swap(pair.first, pair.second);
 		pairVec.push_back(pair);
@@ -59,15 +58,17 @@ std::vector<std::pair<int, int> > createPairs(std::vector<int>& vectorIntSeq)
 	return pairVec;
 }
 
-std::deque<std::pair<int, int> > createPairs(std::deque<int>& dequeIntSeq)
+pairdequeContainer createPairs(std::deque<int>& dequeIntSeq)
 {
-	std::deque<std::pair<int, int> > pairVec;
+	pairdequeContainer pairVec;
 	std::deque<int>::iterator it = dequeIntSeq.begin();
 	while (it != dequeIntSeq.end() && (it + 1) != dequeIntSeq.end())
 	{
 		std::pair<int, int> pair;
-		pair.first = *it; dequeIntSeq.erase(it);
-		pair.second = *it; dequeIntSeq.erase(it);
+		pair.first = *it;
+		it = dequeIntSeq.erase(it);
+		pair.second = *it;
+		it = dequeIntSeq.erase(it);
 		if (pair.second < pair.first)
 			std::swap(pair.first, pair.second);
 		pairVec.push_back(pair);
@@ -75,9 +76,9 @@ std::deque<std::pair<int, int> > createPairs(std::deque<int>& dequeIntSeq)
 	return pairVec;
 }
 
-std::vector<std::pair<int, int> > mergePairs(std::vector<std::pair<int, int> > a, std::vector<std::pair<int, int> > b)
+pairVectorContainer mergePairs(pairVectorContainer a, pairVectorContainer b)
 {
-	std::vector<std::pair<int, int> > c;
+	pairVectorContainer c;
 
 	while(!a.empty() && !b.empty())
 	{
@@ -106,10 +107,9 @@ std::vector<std::pair<int, int> > mergePairs(std::vector<std::pair<int, int> > a
 	return c;
 }
 
-
-std::deque<std::pair<int, int> > mergePairs(std::deque<std::pair<int, int> > a, std::deque<std::pair<int, int> > b)
+pairdequeContainer mergePairs(pairdequeContainer a, pairdequeContainer b)
 {
-	std::deque<std::pair<int, int> > c;
+	pairdequeContainer c;
 
 	while(!a.empty() && !b.empty())
 	{
@@ -138,16 +138,16 @@ std::deque<std::pair<int, int> > mergePairs(std::deque<std::pair<int, int> > a, 
 	return c;
 }
 
-std::vector<std::pair<int, int> > mergesortPairs(std::vector<std::pair<int, int> >& pairVec, int n)
+pairVectorContainer mergesortPairs(pairVectorContainer& pairVec, int n)
 {
 	if (n == 1)
 		return pairVec;
 
-	std::vector<std::pair<int, int> > arr1;
+	pairVectorContainer arr1;
 	for (int i = 0; i < n / 2; i++)
 		arr1.push_back(pairVec[i]);
 
-	std::vector<std::pair<int, int> > arr2;
+	pairVectorContainer arr2;
 	for (int i = n / 2; i < n; i++)
 		arr2.push_back(pairVec[i]);
 
@@ -157,16 +157,16 @@ std::vector<std::pair<int, int> > mergesortPairs(std::vector<std::pair<int, int>
 	return mergePairs(arr1, arr2);
 }
 
-std::deque<std::pair<int, int> > mergesortPairs(std::deque<std::pair<int, int> >& pairdeque, int n)
+pairdequeContainer mergesortPairs(pairdequeContainer& pairdeque, int n)
 {
 	if (n == 1)
 		return pairdeque;
 
-	std::deque<std::pair<int, int> > arr1;
+	pairdequeContainer arr1;
 	for (int i = 0; i < n / 2; i++)
 		arr1.push_back(pairdeque[i]);
 
-	std::deque<std::pair<int, int> > arr2;
+	pairdequeContainer arr2;
 	for (int i = n / 2; i < n; i++)
 		arr2.push_back(pairdeque[i]);
 
@@ -222,7 +222,9 @@ void binaryInsert(int pend, std::vector<int>& main, int high)
 		else
 			low = mid + 1;
 	}
-	if (pend < main[low])
+	if (low >= (int)main.size())
+    	main.push_back(pend);
+	else if (pend < main[low])
 		main.insert(pos + low, pend);
 	else
 		main.insert(pos + low + 1, pend);
@@ -247,7 +249,9 @@ void binaryInsert(int pend, std::deque<int>& main, int high)
 		else
 			low = mid + 1;
 	}
-	if (pend < main[low])
+	if (low >= (int)main.size())
+    	main.push_back(pend);
+	else if (pend < main[low])
 		main.insert(pos + low, pend);
 	else
 		main.insert(pos + low + 1, pend);
@@ -337,10 +341,10 @@ void recursive_vec(std::vector<int>& _vector)
 	if (_vector.size() <= 1)
 		return ;
 
-	std::vector<std::pair<int, int> > pairVec = createPairs(_vector);
-	
+	pairVectorContainer pairVec = createPairs(_vector);
+
 	pairVec = mergesortPairs(pairVec, pairVec.size());
-	
+
 	std::vector<int> main = extractChain(pairVec, 0);
 	std::vector<int> pend = extractChain(pairVec, 1);
 	
@@ -361,8 +365,8 @@ void recursive_deque(std::deque<int>& _deque)
 	if (_deque.size() <= 1)
 		return ;
 
-	std::deque<std::pair<int, int> > pairdeque = createPairs(_deque);
-	
+	pairdequeContainer pairdeque = createPairs(_deque);
+
 	pairdeque = mergesortPairs(pairdeque, pairdeque.size());
 
 	std::deque<int> main = extractChain(pairdeque, 0);
@@ -373,7 +377,6 @@ void recursive_deque(std::deque<int>& _deque)
 		main.insert(main.begin(), pend[0]);
 	
 	binaryInsertionSort(pend, main);
-	
 	
 	if (!_deque.empty())
 		binaryInsert(_deque[0], main, main.size() - 1);
@@ -413,9 +416,9 @@ void PmergeMe::sort()
 	    return ;
 	}
 	std::cout << "Before:\t";
-	size_t setSize = vector.size();
+	size_t setSize = deque.size();
 	for (size_t i = 0; i < setSize; i++)
-		std::cout << vector[i] << ' ';
+		std::cout << deque[i] << ' ';
 	std::cout << std::endl;
 
 	if (setSize > 1)
@@ -426,7 +429,7 @@ void PmergeMe::sort()
 
 	std::cout << "After:\t";
 	for (size_t i = 0; i < setSize; i++)
-		std::cout << vector[i] << ' ';
+		std::cout << deque[i] << ' ';
 	std::cout << std::endl;
 
 	std::cout << "Time to process a range of " << std::setw(7) << setSize << " elements with std::vector<int> : ";

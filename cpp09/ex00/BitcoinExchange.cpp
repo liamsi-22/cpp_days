@@ -144,6 +144,8 @@ void BitcoinExchange::processInput(const std::string &inputFile)
     std::getline(file2, line);
     if (line.empty())
         throw std::runtime_error("Error: empty file.");
+    if (trim(line) != "date | value")
+        throw std::runtime_error("Error: wrong file format");
     while(std::getline(file2, line))
     {
         size_t pos = line.find('|');
